@@ -10,8 +10,6 @@ import { ListService } from '../../services/list.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToDoListComponent implements OnInit {
-  @Input('listData') list: List[];
-
   public todoList: List[];
 
   constructor(
@@ -20,7 +18,8 @@ export class ToDoListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.todoList = this.list;
+    this.todoList = this._listService.list;
+    console.log(this.todoList)
   }
 
   /**

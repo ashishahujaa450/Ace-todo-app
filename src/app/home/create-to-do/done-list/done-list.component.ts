@@ -11,8 +11,6 @@ import { ListService } from '../../services/list.service';
 })
 export class DoneListComponent implements OnInit {
 
-  @Input('listData') list: List[];
-
   public todoList: List[];
 
   constructor(
@@ -21,7 +19,7 @@ export class DoneListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.todoList = this.list;
+    this.todoList = this._listService.list;
   }
 
   /**

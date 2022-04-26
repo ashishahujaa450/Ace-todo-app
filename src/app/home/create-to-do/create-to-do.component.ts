@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, Subscription } from 'rxjs';
@@ -14,13 +14,13 @@ import { ListService } from '../services/list.service';
 export class CreateToDoComponent implements OnInit, OnDestroy {
 
   public todoForm: FormGroup;
-  public todoList: List[];
 
   private todoFormSubscription: Subscription;
 
   constructor(
     private _listService: ListService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +31,6 @@ export class CreateToDoComponent implements OnInit, OnDestroy {
    * @name setupComponent
    */
   private setupComponent(){
-    this.todoList = this._listService.list;
     this.initForm();
     this.onFormChanges();
   }
@@ -81,6 +80,8 @@ export class CreateToDoComponent implements OnInit, OnDestroy {
       })
       //resetting form
       this.todoForm.reset();
+      console.log(this._listService.list)
+      this.cdRef.markForCheck()
     } catch(err) {
       console.log(err)
       alert('some error occured');
