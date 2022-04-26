@@ -21,7 +21,7 @@ export class ListService {
    * @name toggleStatus
    * @param item 
    */
-  toggleStatus(item: List){
+  public toggleStatus(item: List){
     try{
       item.isDone = !item.isDone;
     } catch(err){
@@ -29,11 +29,24 @@ export class ListService {
     }
   }
 
-  async addListItem(item: List){
+  /**
+   * @name addListItem
+   * @param item 
+   */
+   public async addListItem(item: List){
     try{
       await this._list.push(item)
     } catch(err){
       throw(err)
     }
+  }
+
+  /**
+   * @name itemExistsFromStatus
+   * @param isDone 
+   * @returns 
+   */
+   public itemExistsFromStatus(isDone: boolean){
+    return this._list.find((elm) => elm.isDone == isDone) 
   }
 }

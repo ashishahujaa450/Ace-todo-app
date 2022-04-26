@@ -1,1 +1,16 @@
-<p>done-list works!</p>
+<h2 *ngIf="checkItemExistance()">Done List </h2>
+<mat-selection-list #list>
+    <ng-container *ngFor="let item of todoList;">
+      <mat-list-option 
+      checkboxPosition="before" 
+      *ngIf="item && item.isDone"
+      [matTooltip]="item.description"
+      matTooltipPosition="right"
+      (click)="toggleStatus(item)">
+        <div class="flex-panel flex-v-center flex-justify-between">
+          {{item?.title}}
+          <p>Repeating: {{item?.repeating ? 'Yes' : 'No'}}</p>
+        </div>
+      </mat-list-option>
+    </ng-container>
+  </mat-selection-list>

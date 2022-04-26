@@ -1,3 +1,6 @@
+<!--ATTENTION-->
+<!--we can directly use mat select list or 1 component but it's in requirement so I created 2 child components (done list & todo list)-->
+
 <mat-toolbar color="primary">
     <span>Ace App</span>
 </mat-toolbar>
@@ -35,15 +38,13 @@
        </form>
 
         <div class="form-block">
-            <h2>Undone List</h2>
             <!--list components-->
-            <app-to-do-list></app-to-do-list>
+            <app-to-do-list [listData]="todoList"></app-to-do-list>
         </div><!--end row-->
 
-        <div class="form-block">
-            <h2>Done List </h2>
+        <div class="form-block mt-1">
             <!--list components-->
-            <app-to-do-list></app-to-do-list>
+            <app-done-list [listData]="todoList"></app-done-list>
         </div><!--end row-->
         
 
