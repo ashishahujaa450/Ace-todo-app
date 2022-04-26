@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { List } from '../../interfaces/list.interface';
 import { ListService } from '../../services/list.service';
@@ -6,7 +6,8 @@ import { ListService } from '../../services/list.service';
 @Component({
   selector: 'app-done-list',
   templateUrl: './done-list.component.html',
-  styleUrls: ['./done-list.component.scss']
+  styleUrls: ['./done-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DoneListComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { List } from '../../interfaces/list.interface';
 import { ListService } from '../../services/list.service';
@@ -6,7 +6,8 @@ import { ListService } from '../../services/list.service';
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
-  styleUrls: ['./to-do-list.component.scss']
+  styleUrls: ['./to-do-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToDoListComponent implements OnInit {
   @Input('listData') list: List[];

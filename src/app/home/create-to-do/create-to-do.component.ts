@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, Subscription } from 'rxjs';
@@ -8,7 +8,8 @@ import { ListService } from '../services/list.service';
 @Component({
   selector: 'app-create-to-do',
   templateUrl: './create-to-do.component.html',
-  styleUrls: ['./create-to-do.component.scss']
+  styleUrls: ['./create-to-do.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateToDoComponent implements OnInit, OnDestroy {
 
