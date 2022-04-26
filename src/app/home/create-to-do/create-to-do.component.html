@@ -1,0 +1,52 @@
+<mat-toolbar color="primary">
+    <span>Ace App</span>
+</mat-toolbar>
+
+<section class="main-section">
+    <div class="container">
+       <form [formGroup]="todoForm">
+            <div class="flex-panel form-block flex-justify-center">
+                <mat-form-field appearance="outline" required>
+                    <mat-label>Task name</mat-label>
+                    <input matInput placeholder="enter here" name="title" formControlName="title">
+                </mat-form-field>
+            </div><!--end form row-->
+
+            <div class="flex-panel form-block flex-justify-center">
+                <mat-form-field appearance="outline" required>
+                    <mat-label>Task description</mat-label>
+                    <textarea matInput placeholder="enter here" name="description" formControlName="description"></textarea>
+                </mat-form-field>
+            </div><!--end form row-->
+
+            <div class="flex-panel form-block flex-justify-center">
+                <mat-form-field appearance="outline" required>
+                    <mat-label>Repeating task</mat-label>
+                    <mat-select name="repeating" formControlName="repeating">
+                        <mat-option [value]="true">
+                        Yes
+                        </mat-option>
+                        <mat-option [value]="false">
+                            No
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div><!--end form row-->
+       </form>
+
+        <div class="form-block">
+            <h2>Undone List</h2>
+            <!--list components-->
+            <app-to-do-list></app-to-do-list>
+        </div><!--end row-->
+
+        <div class="form-block">
+            <h2>Done List </h2>
+            <!--list components-->
+            <app-to-do-list></app-to-do-list>
+        </div><!--end row-->
+        
+
+    </div><!--end container-->
+</section><!--end main section-->
+
