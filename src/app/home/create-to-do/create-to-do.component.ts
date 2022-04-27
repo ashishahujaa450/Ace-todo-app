@@ -3,7 +3,8 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, Subscription } from 'rxjs';
 import { List } from '../interfaces/list.interface';
-import { ListService } from '../services/list.service';
+
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-create-to-do',
@@ -14,11 +15,11 @@ import { ListService } from '../services/list.service';
 export class CreateToDoComponent implements OnInit, OnDestroy {
 
   public todoForm: FormGroup;
+  public todoList: List[] = [];
 
   private todoFormSubscription: Subscription;
 
   constructor(
-    private _listService: ListService,
     private _snackBar: MatSnackBar,
     private cdRef: ChangeDetectorRef
   ) { }
@@ -70,23 +71,38 @@ export class CreateToDoComponent implements OnInit, OnDestroy {
         description: data.description,
         repeating: data.repeating,
         isDone: false,
+        id: uuidv4()
       }
 
-      //add data into service list
-      await this._listService.addListItem(item);
+      //add data into list
+      await this.addListItem(item);
       //show success message
       this._snackBar.open('Task created successfully!', '', {
         duration: 3000
       })
       //resetting form
       this.todoForm.reset();
-      console.log(this._listService.list)
-      this.cdRef.markForCheck()
+      this.cdRef.detectChanges();
     } catch(err) {
-      console.log(err)
       alert('some error occured');
     }
     
+  }
+
+  /**
+   * @name addListItem
+   * @param item 
+   */
+   private async addListItem(item: List){
+    try{
+      this.todoList = [...this.todoList, item]
+    } catch(err){
+      throw(err)
+    }
+  }
+
+  onStatusChange(event: any){
+    this.todoList = [...event];
   }
 
   ngOnDestroy(): void {

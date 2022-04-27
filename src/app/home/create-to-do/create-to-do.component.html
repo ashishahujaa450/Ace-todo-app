@@ -39,12 +39,12 @@
 
         <div class="form-block">
             <!--list components-->
-            <app-to-do-list></app-to-do-list>
+            <app-to-do-list [list]="todoList" (changeStatus)="onStatusChange($event)"></app-to-do-list>
         </div><!--end row-->
 
         <div class="form-block mt-1">
             <!--list components-->
-            <app-done-list></app-done-list>
+            <app-done-list [list]="todoList" (changeStatus)="onStatusChange($event)"></app-done-list>
         </div><!--end row-->
         
 

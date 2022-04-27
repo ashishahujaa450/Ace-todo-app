@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { List } from '../../interfaces/list.interface';
-import { ListService } from '../../services/list.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -10,16 +9,16 @@ import { ListService } from '../../services/list.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToDoListComponent implements OnInit {
-  public todoList: List[];
+  @Input('list') todoList: List[];
+  @Output('changeStatus') changeStatus = new EventEmitter<any>();
 
   constructor(
-    private _listService: ListService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.todoList = this._listService.list;
-    console.log(this.todoList)
+    // this.todoList = this._listService._list;
   }
 
   /**
@@ -27,7 +26,7 @@ export class ToDoListComponent implements OnInit {
    * @returns 
    */
    public checkItemExistance(){
-    return this._listService.itemExistsFromStatus(false)
+    return this.todoList.find((elm) => elm.isDone == false) 
   }
 
    /**
@@ -38,9 +37,19 @@ export class ToDoListComponent implements OnInit {
     try{
       this._snackBar.open('Loading')
       setTimeout(() => {
-        this._listService.toggleStatus(listItem);
+        //find item & change status
+        let item = this.todoList.find((elm) => elm.id == listItem.id)
+        if(item){
+          item.isDone = !item.isDone;
+        }
+
+        //emmiting data
+        this.changeStatus.emit(this.todoList);
+
+        this.cdRef.markForCheck();
         this._snackBar.dismiss()
-      }, 500)
+      }, 500);
+      
     } catch(err){
       console.log(err)
       alert('Some error occured.')
